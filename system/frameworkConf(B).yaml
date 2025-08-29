@@ -1,0 +1,7 @@
+EtcdPort : 2379
+ApiServerAddr : "http://172.150.0.24:10000" #ip needs to be changed to the ip address of the master node (EdgeNode1)
+FileRegistryAddr : "http://172.150.0.24:8919" #ip needs to be changed to the ip address of the master node (EdgeNode1)
+NodeName : "EdgeNode2"
+ClusterCategory : "Edge"
+LocalClusterID : "Edge1"
+IsMasterNode : true

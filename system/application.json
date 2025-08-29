@@ -1,0 +1,16 @@
+{
+	"data": [ {"name": "yolo_projects_asy" }],
+	"type": "command",
+	"command": ["python" ],
+	"args": ["yolo_projects_asy/yolo-asy-running.py"],
+	"enable_control": true,
+	"conditions": {
+	  "formulas": [
+		{
+		  "condition_type": "ProgramDependency",
+		  "from": "yolo_projects_asy/requirements.txt"
+		}
+	  ]
+    },
+	"hasReplca": true
+}

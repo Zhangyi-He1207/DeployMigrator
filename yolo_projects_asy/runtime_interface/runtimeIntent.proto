@@ -1,0 +1,104 @@
+// 指定proto语言版本
+syntax = "proto3";
+// 这部分的内容是关于最后生成的go文件是处在哪个目录哪个包中，.表示在当前目录生成，service表示生成的go文件的包名是service
+option go_package = ".;service";
+
+service RuntimeIntent{
+  // 应用
+  rpc init (InitIntent) returns (Result) {}
+  rpc start (StartIntent) returns (Result) {}
+  rpc restart (RestartIntent) returns (Result) {}
+  rpc stop (StopIntent) returns (Result) {}
+
+  // 获取应用健康状态
+  rpc getStatus (GetStatusIntent) returns (APPStatus) {}
+
+  // 迁移相关
+  rpc store (StoreIntent) returns (Result) {}
+  rpc restore (RestoreIntent) returns (Result) {}
+}
+
+// Constants
+// 应用生命周期
+enum AppLifecycle {
+  INIT = 0;
+  PENDING = 1;
+  RUNNING = 2;
+  COMPLETED = 3;
+  ERROR = 4;
+  STOPPED = 5;
+  TERMINATED = 6;
+  STORING = 7;
+  MIGRATING = 8;
+  RESTORING = 9;
+}
+
+// 应用数据类型
+enum DataType {
+  DATA = 0;
+  HTTP = 1;
+  // ... 其他数据格式
+}
+
+// Results
+message Result {
+  string msg = 1;
+  int64 stateCode = 2;
+  string data = 3;
+}
+
+// APP状态
+// 如果应用执行发生错误，或者产生其他的行为
+// 则返回对应的StateCode，并在Msg中返回对应的结构化数据
+// 调度框架会根据应用的生命周期，状态码以及状态信息，做出相应的处理
+message APPStatus {
+  string msg = 1;
+  int64 stateCode = 2;
+  AppLifecycle lifecycle = 3;
+}
+
+// MetaData
+message Data {
+  string name = 1;
+  DataType type = 2;
+  // 小数据直接传输，大数据需要应用通过URL/共享内存等方式同步
+  string data = 3;
+}
+
+// Intents
+message InitIntent {
+  // 身份校验
+  string app=1;
+  // 初始化数据
+  // 根据应用本身需求定义
+//  repeated Data data = 2;
+}
+
+message StartIntent {
+  string app=1;
+//  repeated Data data=2;
+}
+
+message RestartIntent {
+  string app=1;
+//  repeated Data data=2;
+}
+
+message StopIntent {
+  string app=1;
+//  repeated Data data=2;
+}
+
+message GetStatusIntent {
+  string app=1;
+}
+
+message StoreIntent {
+  string app=1;
+  repeated Data data=2;
+}
+
+message RestoreIntent {
+  string app=1;
+  repeated Data data=2;
+}

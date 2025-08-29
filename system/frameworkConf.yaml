@@ -1,0 +1,7 @@
+EtcdPort : 2379
+ApiServerAddr : "http://127.0.0.1:10000" #this ip need to chage
+FileRegistryAddr : "http://127.0.0.1:8919"
+NodeName : "EdgeNode1"
+ClusterCategory : "Edge"
+LocalClusterID : "Edge1"
+IsMasterNode : true
